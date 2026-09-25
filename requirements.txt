@@ -10,3 +10,4 @@ streamlit
 numpy
 pandas
 matplotlib
+rank_bm25
