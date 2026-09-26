@@ -1,5 +1,7 @@
 # 🌱 Blissbot: Mental Health Education RAG Chatbot
 
+**🔗 Live demo: [blissbotragproject.streamlit.app](https://blissbotragproject.streamlit.app/)**
+
 Blissbot is a Retrieval-Augmented Generation (RAG) chatbot that answers mental-health
 education questions using a curated Q&A corpus (largely sourced from NIMH). It combines
 dense and lexical retrieval, a Groq-hosted LLM for generation, and a two-stage guardrail
