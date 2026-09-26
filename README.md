@@ -12,19 +12,19 @@ generated answer.
 
 ## Features
 
-- **Hybrid retrieval** :— combines dense vector search (cosine similarity over
+- **Hybrid retrieval** : combines dense vector search (cosine similarity over
   sentence embeddings) with BM25 lexical search, fused via Reciprocal Rank Fusion (RRF).
-- **Vector store** :— [ChromaDB](https://www.trychroma.com/) persistent collection,
+- **Vector store** : [ChromaDB](https://www.trychroma.com/) persistent collection,
   embedded with `BAAI/bge-small-en-v1.5` via `sentence-transformers`.
-- **LLM generation** :— [Groq](https://groq.com/)-hosted model (`langchain-groq`),
+- **LLM generation** : [Groq](https://groq.com/)-hosted model (`langchain-groq`),
   called only on documents retrieved from the corpus (answers are grounded in context,
   not free generation).
-- **Crisis-detection guardrail** :— a regex pass plus an optional OpenAI moderation
+- **Crisis-detection guardrail** : a regex pass + OpenAI moderation
   API pass catch self-harm / suicide language *before* any query reaches the LLM,
   and reply with region-specific crisis resources instead.
-- **Streamlit chat UI** :— session-based chat interface with a sources panel showing
+- **Streamlit chat UI** : session-based chat interface with a sources panel showing
   which documents backed each answer and their fused retrieval score.
-- **Evaluation notebooks** :— Jupyter notebooks comparing dense-only retrieval,
+- **Evaluation notebooks** : Jupyter notebooks comparing dense-only retrieval,
   hybrid retrieval, and end-to-end pipeline behavior.
 
 ## Project structure
@@ -48,21 +48,21 @@ RAG_Project/
 
 ## How it works
 
-1. **Ingestion** :— Q&A pairs from `data/json_files/bliss_corpus.json` are embedded with
+1. **Ingestion** : Q&A pairs from `data/json_files/bliss_corpus.json` are embedded with
    `BAAI/bge-small-en-v1.5` and stored in a persistent ChromaDB collection
    (`data/vector_store/`), alongside metadata (`source`, `topic_group`, `url`, `region`, `flags`).
 2. **Query time**:
-   - **Guardrail check** :— the incoming message is checked against a regex pattern set
+   - **Guardrail check** : the incoming message is checked against a regex pattern set
      for crisis language, then (if configured) an OpenAI moderation call. If either
      trips, the app returns crisis resources directly and skips retrieval/generation.
-   - **Retrieval** :— the query is embedded and searched against Chroma (dense), and
+   - **Retrieval** : the query is embedded and searched against Chroma (dense), and
      separately scored with a BM25 index built over the same corpus (lexical). Both
      ranked candidate lists are fused with Reciprocal Rank Fusion, and low-scoring
      fused results are filtered out.
-   - **Generation** :— the top fused documents are passed as context to the Groq LLM
+   - **Generation** : the top fused documents are passed as context to the Groq LLM
      under a system prompt that restricts it to answering from context only, forbids
      diagnosis/clinical advice, and asks for a warm, plain-language tone.
-3. **UI** :— Streamlit renders the conversation, plus an expandable "Sources used"
+3. **UI** : Streamlit renders the conversation, plus an expandable "Sources used"
    panel per answer showing which documents were retrieved and their score.
 
 ## Prerequisites
@@ -106,12 +106,6 @@ The hybrid-retrieval version is the current entry point:
 streamlit run main.py
 ```
 
-The earlier dense-only version is also available:
-
-```bash
-streamlit run app.py
-```
-
 The vector store under `data/vector_store/` is pre-built from `bliss_corpus.json`, so
 the app can run out of the box. To rebuild it from scratch or index new documents, see
 the ingestion steps in `notebook/RAG_Pipeline_Hybrid.ipynb`.
@@ -143,5 +137,3 @@ the ingestion steps in `notebook/RAG_Pipeline_Hybrid.ipynb`.
 
 ## License
 
-No license file is currently included in this repository. Add one (e.g. MIT,
-Apache-2.0) if you intend for others to reuse this code.
