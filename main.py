@@ -204,7 +204,7 @@ class HybridRetriever:
                 }
         return candidates
 
-    def retrieve(self, query: str, top_k: int = TOP_K, score_threshold: float = 0.3) -> list[dict]:
+    def retrieve(self, query: str, top_k: int = TOP_K, score_threshold: float = 0.0) -> list[dict]:
         """Retrieve relevant documents for a query using fused dense + BM25 ranking."""
         self.last_error = None
         try:
