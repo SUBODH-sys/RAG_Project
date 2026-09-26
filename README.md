@@ -136,6 +136,3 @@ the ingestion steps in `notebook/RAG_Pipeline_Hybrid.ipynb`.
 `langchain` · `langchain-community` · `langchain-groq` · `sentence-transformers` ·
 `chromadb` · `rank_bm25` · `streamlit` · `numpy` · `pandas` · `matplotlib` ·
 `python-dotenv`
-
-## License
-
